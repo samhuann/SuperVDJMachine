@@ -1,0 +1,70 @@
+# Python build & install artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+build/
+dist/
+develop-eggs/
+eggs/
+.eggs/
+parts/
+sdist/
+wheels/
+share/python-wheels/
+pip-wheel-metadata/
+MANIFEST
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+.python-version
+
+# Test / coverage caches
+.pytest_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+.cache/
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.pytype/
+
+# Editor / IDE / local tooling
+.vscode/
+*.swp
+*.swo
+*.swn
+.DS_Store
+Thumbs.db
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Project outputs / scratch
+*.log
+results/
+reports/
+out/
+*.tmp
+reports_*.txt
+reports_*.err
+
+# Large research datasets — kept locally, not needed at runtime.
+# (Runtime only needs supervdj/data/imgt/*.fasta and supervdj/data/v_cnn_trb/.)
+supervdj/data/PRJNA*.tsv
+supervdj/data/NeoTCR.xlsx
+supervdj/data/VDJDB*.tsv
+supervdj/data/VDJDB*.csv
+Best_VDJdb.tsv
