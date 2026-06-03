@@ -74,6 +74,7 @@ class PredictionConfig:
     usage_weight: float = 1.0
     olga_weight: float = 0.1
     sonia_weight: float = 0.1
+    boundary_weight: float = 1.0
     min_cdr3_length: int = 5
     max_cdr3_length: int = 30
     relax_filters_if_empty: bool = True

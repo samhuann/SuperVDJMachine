@@ -61,13 +61,16 @@ def _build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Disable the V×J scoring progress bar",
     )
+    p.add_argument("--olga-weight", type=float, default=0.1)
+    p.add_argument("--sonia-weight", type=float, default=0.1)
     p.add_argument("--motif-weight", type=float, default=1.0)
     p.add_argument("--usage-weight", type=float, default=1.0)
+    p.add_argument("--boundary-weight", type=float, default=1.0)
     p.add_argument(
         "--v-cnn-dir",
         type=Path,
         default=None,
-        help="Load a pre-trained VGeneCNN from this directory (see train_v_cnn.py)",
+        help="Load a pre-trained VGeneCNN from this directory.",
     )
     p.add_argument("--v-model-weight", type=float, default=1.0)
     p.add_argument(
@@ -103,11 +106,16 @@ def _build_parser() -> argparse.ArgumentParser:
     e.add_argument("--top-k", type=int, default=50)
     e.add_argument("--no-olga", action="store_true")
     e.add_argument("--no-sonia", action="store_true")
+    e.add_argument("--olga-weight", type=float, default=0.1)
+    e.add_argument("--sonia-weight", type=float, default=0.1)
+    e.add_argument("--motif-weight", type=float, default=1.0)
+    e.add_argument("--usage-weight", type=float, default=1.0)
+    e.add_argument("--boundary-weight", type=float, default=1.0)
     e.add_argument(
         "--v-cnn-dir",
         type=Path,
         default=None,
-        help="Load a pre-trained VGeneCNN from this directory (see train_v_cnn.py)",
+        help="Load a pre-trained VGeneCNN from this directory.",
     )
     e.add_argument("--v-model-weight", type=float, default=1.0)
     e.add_argument(
@@ -126,7 +134,6 @@ def _build_parser() -> argparse.ArgumentParser:
 
 
 def _load_v_model(args: argparse.Namespace):
-    # The supervised V model is a pre-trained CNN artifact (see train_v_cnn.py).
     cnn_dir = getattr(args, "v_cnn_dir", None)
     if cnn_dir is None:
         return None
@@ -141,6 +148,9 @@ def _make_predict_config(args: argparse.Namespace) -> PredictionConfig:
         top_k=args.top_k,
         motif_weight=args.motif_weight,
         usage_weight=args.usage_weight,
+        olga_weight=args.olga_weight,
+        sonia_weight=args.sonia_weight,
+        boundary_weight=args.boundary_weight,
         use_olga=not args.no_olga,
         use_sonia=not args.no_sonia,
         require_c_start=not args.allow_noncanonical_ends,
@@ -207,6 +217,11 @@ def run_eval(args: argparse.Namespace) -> int:
         top_k=args.top_k,
         use_olga=not args.no_olga,
         use_sonia=not args.no_sonia,
+        olga_weight=args.olga_weight,
+        sonia_weight=args.sonia_weight,
+        motif_weight=args.motif_weight,
+        usage_weight=args.usage_weight,
+        boundary_weight=args.boundary_weight,
         v_model=_load_v_model(args),
         v_model_weight=args.v_model_weight,
     )

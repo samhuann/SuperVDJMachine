@@ -68,6 +68,34 @@ def test_cli_predict_csv_to_file(tmp_path):
     assert df.iloc[0]["v_gene"].startswith("TRBV")
 
 
+def test_cli_predict_accepts_score_weights():
+    code, out = _run_cli(
+        [
+            "predict",
+            "--chain",
+            "TRB",
+            "--cdr3",
+            "CASSIRSSYEQYF",
+            "--top-k",
+            "3",
+            "--no-olga",
+            "--no-sonia",
+            "--olga-weight",
+            "1.0",
+            "--sonia-weight",
+            "1.0",
+            "--motif-weight",
+            "0.5",
+            "--usage-weight",
+            "0.0",
+            "--boundary-weight",
+            "0.0",
+        ]
+    )
+    assert code == 0
+    assert "TRBV" in out
+
+
 def test_cli_rejects_unknown_chain():
     with pytest.raises(SystemExit):
         main(["predict", "--chain", "TRG", "--cdr3", "CASSIRSSYEQYF"])

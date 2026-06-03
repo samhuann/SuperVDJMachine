@@ -1,8 +1,7 @@
 """Supervised V-gene model: a 1D-CNN over CDR3 residues.
 
-This is the strongest CDR3-only V ranker for TRB (see the README benchmark).
-TensorFlow is imported lazily so the rest of the package and the test suite
-never need it.
+TensorFlow is imported lazily so the rest of the package and the test suite do
+not need it unless the CNN is trained, loaded, or used directly.
 """
 
 from __future__ import annotations
@@ -40,15 +39,7 @@ _AA = "ACDEFGHIKLMNPQRSTVWY"
 
 
 class VGeneCNN:
-    """1D-CNN over residue embeddings for V-gene scoring from a CDR3 sequence.
-
-    On a CDR3-disjoint PRJNA280417 split it reaches Top-5 ~= 68% and Top-10 ~=
-    82%, where both added model capacity and added training data plateau -- i.e.
-    near the information limit of the amino-acid CDR3 for V assignment.
-
-    The model carries no motif/usage prior: blending those terms only dilutes
-    its ranking, so it scores V genes alone. TensorFlow is imported lazily.
-    """
+    """1D-CNN over residue embeddings for V-gene scoring from a CDR3 sequence."""
 
     MAXLEN = 24
 
@@ -95,8 +86,10 @@ class VGeneCNN:
         tf.random.set_seed(seed)
         inp = layers.Input(shape=(cls.MAXLEN,))
         h = layers.Embedding(len(_AA) + 1, 32, mask_zero=True)(inp)
-        convs = [layers.Conv1D(128, k, padding="same", activation="relu")(h)
-                 for k in (2, 3, 4, 5)]
+        convs = [
+            layers.Conv1D(128, k, padding="same", activation="relu")(h)
+            for k in (2, 3, 4, 5)
+        ]
         h = layers.Concatenate()(convs)
         h = layers.GlobalMaxPooling1D()(h)
         h = layers.Dropout(0.3)(h)
@@ -104,12 +97,23 @@ class VGeneCNN:
         h = layers.Dropout(0.3)(h)
         out = layers.Dense(len(classes), activation="softmax")(h)
         model = models.Model(inp, out)
-        model.compile(optimizer=tf.keras.optimizers.Adam(1e-3),
-                      loss="sparse_categorical_crossentropy")
-        model.fit(x, y, epochs=epochs, batch_size=batch_size, verbose=0,
-                  validation_split=0.05,
-                  callbacks=[tf.keras.callbacks.EarlyStopping(
-                      monitor="val_loss", patience=2, restore_best_weights=True)])
+        model.compile(
+            optimizer=tf.keras.optimizers.Adam(1e-3),
+            loss="sparse_categorical_crossentropy",
+        )
+        model.fit(
+            x,
+            y,
+            epochs=epochs,
+            batch_size=batch_size,
+            verbose=0,
+            validation_split=0.05,
+            callbacks=[
+                tf.keras.callbacks.EarlyStopping(
+                    monitor="val_loss", patience=2, restore_best_weights=True
+                )
+            ],
+        )
         return cls(chain, model, classes)
 
     @classmethod
@@ -149,9 +153,12 @@ class VGeneCNN:
 
         path = Path(path)
         path.mkdir(parents=True, exist_ok=True)
-        self._model.save(str(path / "model"))  # TF SavedModel dir (TF 2.12)
-        (path / "meta.json").write_text(json.dumps(
-            {"chain": self.chain, "classes": self.classes, "maxlen": self.maxlen}))
+        self._model.save(str(path / "model"))
+        (path / "meta.json").write_text(
+            json.dumps(
+                {"chain": self.chain, "classes": self.classes, "maxlen": self.maxlen}
+            )
+        )
 
     @classmethod
     def load(cls, path: Path) -> "VGeneCNN":

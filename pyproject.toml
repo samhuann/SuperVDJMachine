@@ -29,7 +29,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=7.0"]
-cnn = ["tensorflow>=2.12"]  # for the VGeneCNN supervised V-gene model
+cnn = ["tensorflow>=2.12"]
 
 [project.scripts]
 supervdj = "supervdj.cli:main"

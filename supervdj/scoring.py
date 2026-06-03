@@ -104,15 +104,7 @@ def _rank_v_genes(
     v_refs: Sequence[GeneReference],
     config: PredictionConfig,
 ) -> List[Tuple[str, float]]:
-    """Rank V genes from CDR3-side evidence only: the germline anchor motif, the
-    V usage prior, and the supervised V model.
-
-    OLGA and SONIA are deliberately excluded from V discrimination. OLGA's
-    P(CDR3 | V) encodes essentially the same germline signal the supervised
-    model already captures, at ~10^4x the cost per CDR3, and does not improve V
-    recall. They remain in the joint (V, J) candidate scoring and the Pgen == 0
-    impossibility filter (see :func:`_score_one`), where Pgen matters.
-    """
+    """Rank V genes from CDR3-side anchor evidence, usage, and optional model."""
     v_scores: Dict[str, float] = {}
     for v in v_refs:
         v_score, _ = v_motif_score(cdr3, v, config)
@@ -353,9 +345,12 @@ def predict(
 
     scores.sort(key=lambda s: s.final_log_score, reverse=True)
     _attach_posteriors(scores)
-    _, j_ranking = _marginalize(scores)
-    v_rank_refs = v_refs if config.v_model is not None else v_survivors
-    v_ranking = _rank_v_genes(cdr3, v_rank_refs, config)
+    joint_v_ranking, j_ranking = _marginalize(scores)
+    if config.use_olga or config.use_sonia:
+        v_ranking = joint_v_ranking
+    else:
+        v_rank_refs = v_refs if config.v_model is not None else v_survivors
+        v_ranking = _rank_v_genes(cdr3, v_rank_refs, config)
     top = scores[: config.top_k]
 
     posteriors = [s.posterior_probability for s in top]

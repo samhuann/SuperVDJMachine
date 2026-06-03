@@ -5,7 +5,7 @@ from __future__ import annotations
 import math
 
 from supervdj.models import PredictionConfig
-from supervdj.motif import j_motif_score, v_motif_score
+from supervdj.motif import boundary_penalty, j_motif_score, v_motif_score
 from supervdj.scoring import _stable_softmax, predict
 
 
@@ -36,6 +36,14 @@ def test_stable_softmax_handles_empty():
 def test_stable_softmax_handles_all_negative_infinity():
     out = _stable_softmax([-math.inf, -math.inf])
     assert out == [0.5, 0.5]
+
+
+def test_boundary_weight_scales_penalty(trbv_refs, trbj_refs):
+    cdr3 = "CASSIRSS"
+    base = PredictionConfig(boundary_weight=1.0)
+    off = PredictionConfig(boundary_weight=0.0)
+    assert boundary_penalty(cdr3, trbv_refs[0], trbj_refs[0], off) == 0.0
+    assert boundary_penalty(cdr3, trbv_refs[0], trbj_refs[0], base) >= 0.0
 
 
 def test_predict_ranks_known_pair_top(trbv_refs, trbj_refs):

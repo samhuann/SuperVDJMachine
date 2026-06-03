@@ -68,3 +68,8 @@ supervdj/data/NeoTCR.xlsx
 supervdj/data/VDJDB*.tsv
 supervdj/data/VDJDB*.csv
 Best_VDJdb.tsv
+
+# Manuscript
+figures/
+figures_fresh/
+paper.md

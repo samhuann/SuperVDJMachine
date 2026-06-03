@@ -66,4 +66,4 @@ def boundary_penalty(
     overlap = len(v.anchor) + len(j.anchor) - len(cdr3)
     if overlap <= 0:
         return 0.0
-    return config.soft_mismatch_penalty * float(overlap)
+    return config.boundary_weight * config.soft_mismatch_penalty * float(overlap)
