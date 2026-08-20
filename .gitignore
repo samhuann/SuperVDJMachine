@@ -1,0 +1,14 @@
+# raw repertoire tables are user-supplied and never redistributed
+data/*.tsv
+data/*.csv
+data/*.xlsx
+!data/synthetic_smoke.tsv
+
+# GEO validation cohorts: downloaded, never redistributed
+data/cohorts/
+
+# generated
+results/
+__pycache__/
+*.pyc
+.pytest_cache/

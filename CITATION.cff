@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this software or the posterior table it produces, please cite both the software and the accompanying paper."
+title: "SuperVDJMachine (supervdj): recoverability of TCR V and J genes from CDR3 sequences"
+abstract: >-
+  A pipeline that computes, for each TCR CDR3 amino-acid sequence, a posterior
+  distribution over candidate V and J genes under pretrained generative models of
+  V(D)J recombination (OLGA) and selection (SONNIA), together with a calibrated
+  candidate-set utility whose coverage is measured on held-out data.
+type: software
+version: 1.0.0
+date-released: "2026-08-19"
+license: MIT
+repository-code: "https://github.com/samhuann/SuperVDJMachine"
+authors:
+  - family-names: Huang
+    given-names: Samuel J.
+    email: shuan143@jh.edu
+    orcid: "https://orcid.org/0009-0007-7266-7751"
+    affiliation: "Department of Oncology, Johns Hopkins University School of Medicine, Baltimore, MD, USA"
+  - family-names: Baras
+    given-names: Alexander S.
+    affiliation: "Department of Pathology, Johns Hopkins University School of Medicine, Baltimore, MD, USA"
+keywords:
+  - T cell receptor
+  - immune repertoires
+  - systems immunology
+  - CDR3
+  - V(D)J recombination
+  - generative model
+  - repertoire identifiability
+  - calibrated candidate set

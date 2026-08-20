@@ -1,0 +1,15 @@
+# Exact versions this pipeline was run with (python 3.11.15).
+# pip install -r requirements.lock.txt && pip install -e .
+# olga and sonnia are the two that fix every number the pipeline produces.
+olga==1.3.0
+sonnia==0.4.0
+keras==3.14.1
+torch==2.12.0
+numpy==2.4.6
+pandas==3.0.3
+scipy==1.17.1
+tqdm==4.68.2
+openpyxl==3.1.5
+# used by the figure functions in supervdj/aggregate.py
+matplotlib==3.11.0
+seaborn==0.13.2

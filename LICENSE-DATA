@@ -1,0 +1,33 @@
+Data license
+============
+
+The code in this repository is under the MIT License (see LICENSE). The data
+products are licensed separately, because MIT is a software licence and says
+nothing useful about attribution for a dataset.
+
+Covered by Creative Commons Attribution 4.0 International (CC-BY-4.0)
+---------------------------------------------------------------------
+SPDX-License-Identifier: CC-BY-4.0
+Legal code: https://creativecommons.org/licenses/by/4.0/legalcode
+
+  * supervdj/data/calibration_TRA.tsv, supervdj/data/calibration_TRB.tsv
+  * supervdj/data/confusion_groups_TRA.tsv, supervdj/data/confusion_groups_TRB.tsv
+  * the per-sequence posterior table (results/posteriors.tsv), which is not in
+    this repository -- it is 1.1 GB and is deposited on Zenodo as its own record
+
+Attribution for these products:
+
+  Huang SJ, Baras AS. SuperVDJMachine: per-sequence V and J posteriors for TCR
+  CDR3 sequences. CC-BY-4.0. https://github.com/samhuann/SuperVDJMachine
+
+Not ours to license
+-------------------
+data/imgt/*.fasta are IMGT germline reference sequences, redistributed here only
+to place CDR3 boundaries reproducibly. They remain subject to IMGT's terms of
+use (https://www.imgt.org/) and should be cited as IMGT/GENE-DB, not as part of
+this work.
+
+The repertoire databases themselves -- VDJdb, McPAS-TCR and NeoTCR -- are not
+redistributed in any form. This repository ships the download and normalization
+code plus the accessions; obtain the source files from their maintainers under
+their own terms.

@@ -1,0 +1,10 @@
+chain	nominal_mass	empirical_coverage	mean_set_size	median_set_size
+TRB	0.5	0.4196	5.52	6
+TRB	0.6	0.5673	7.44	9
+TRB	0.7	0.669	9.98	11
+TRB	0.8	0.7755	13.57	16
+TRB	0.9	0.8896	19.19	22
+TRB	0.95	0.9438	23.97	28
+TRB	0.99	0.9749	31.51	35
+TRB	0.995	0.9793	33.49	37
+TRB	0.999	0.9826	36.33	39

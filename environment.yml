@@ -1,0 +1,26 @@
+# Pinned environment for supervdj. Reproduces the published canonical set and posteriors.
+#   conda env create -f environment.yml && conda activate supervdj
+#   pip install -e .
+name: supervdj
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11.15
+  - pip
+  - pip:
+      # generative models (the two that define every number the pipeline produces)
+      - olga==1.3.0
+      - sonnia==0.4.0
+      # sonnia runs on keras 3; the torch backend is what these pins were built against
+      - keras==3.14.1
+      - torch==2.12.0
+      # data handling
+      - numpy==2.4.6
+      - pandas==3.0.3
+      - scipy==1.17.1
+      - tqdm==4.68.2
+      - openpyxl==3.1.5
+      # used by the figure functions in supervdj/aggregate.py
+      - matplotlib==3.11.0
+      - seaborn==0.13.2
+# tests are an extra, not part of the pinned runtime: pip install -e ".[dev]"
