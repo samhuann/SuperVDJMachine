@@ -68,6 +68,39 @@ ARTIFACTS = [
 ]
 
 
+def locate_results(named=None):
+    """Point ``results/`` at the unpacked archive whatever its top-level name is.
+
+    A deposited archive does not necessarily unpack to ``results/``; ours unpacks to
+    ``supervdjmachine-results/``. Every path in this script is written relative to
+    ``results/``, so rather than rewrite forty of them we link ``results`` to whatever
+    directory actually holds ``posteriors.tsv``. Returns the directory used.
+    """
+    if os.path.isdir("results") and not named:
+        return "results"
+    src = named
+    if src is None:
+        here = [d for d in sorted(os.listdir("."))
+                if os.path.isdir(d) and os.path.isfile(os.path.join(d, "posteriors.tsv"))]
+        if not here:
+            return "results"           # nothing to link; preflight reports what is missing
+        src = here[0]
+    if not os.path.isdir(src):
+        raise SystemExit(f"--results {src}: not a directory")
+    if os.path.abspath(src) == os.path.abspath("results"):
+        return "results"
+    if os.path.exists("results"):
+        raise SystemExit(f"results/ already exists, so it cannot be linked to {src}. "
+                         "Move it aside, or pass --posteriors and run from elsewhere.")
+    try:
+        os.symlink(os.path.abspath(src), "results")
+    except OSError as e:               # e.g. Windows without developer mode
+        raise SystemExit(f"found the archive at {src}/ but could not link results/ to it "
+                         f"({e}). Rename {src}/ to results/ and run again.")
+    print(f"[using {src}/ as results/]")
+    return src
+
+
 def preflight(posteriors):
     """Report every missing input at once instead of dying on the first read."""
     missing = [p for p in [posteriors, *ARTIFACTS] if not os.path.exists(p)]
@@ -77,9 +110,9 @@ def preflight(posteriors):
     for p in missing:
         print(f"  {p}", file=sys.stderr)
     print(f"\nAll of them are in the deposited analysis record: {ZENODO}\n"
-          "Download it, unpack it so that results/ sits at the repository root, and "
-          "run this again. If the posterior table is somewhere else, pass "
-          "--posteriors /path/to/posteriors.tsv.", file=sys.stderr)
+          "Download and unpack it at the repository root. The archive's top-level "
+          "directory does not have to be called results/; this script finds it as long "
+          "as it sits here, or you can name it with --results DIR.", file=sys.stderr)
     raise SystemExit(2)
 
 
@@ -535,11 +568,16 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--posteriors", default=A.PATH, metavar="TSV",
                     help=f"per-sequence posterior table (default: {A.PATH})")
+    ap.add_argument("--results", metavar="DIR",
+                    help="directory holding the unpacked analysis record, if it is not "
+                         "called results/ (the deposited archive unpacks to "
+                         "supervdjmachine-results/)")
     ap.add_argument("--resample", action="store_true",
                     help="recompute the permutation test and bootstrap instead of "
                          "reading their stored artifacts")
     args = ap.parse_args()
 
+    locate_results(args.results)
     preflight(args.posteriors)
     rerun = args.resample
     df = A.load(args.posteriors)

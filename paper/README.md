@@ -39,14 +39,18 @@ The script reads the per-sequence posterior table and the analysis artifacts und
 
 **https://doi.org/10.5281/zenodo.22024426**
 
-Download `supervdj-results.zip`, unpack it at the repository root so that `results/`
-sits beside `supervdj/`, and run the command above. If the posterior table is
-somewhere else, pass `--posteriors /path/to/posteriors.tsv`.
+Download the archive and unpack it at the repository root:
 
 ```bash
-unzip supervdj-results.zip          # 138 MB, 1.1 GB unpacked
+unzip supervdjmachine-results.zip   # 138 MB, 1.1 GB unpacked
 PYTHONPATH=. python paper/verify_manuscript_numbers.py
 ```
+
+The archive's top-level directory is `supervdjmachine-results/`, not `results/`. The
+script finds it either way: it looks for whichever directory here holds
+`posteriors.tsv` and points `results/` at it, printing which one it used. Name it
+explicitly with `--results DIR` if you unpacked somewhere unusual, or point at a
+relocated table with `--posteriors /path/to/posteriors.tsv`.
 
 Any missing input is reported up front, as a list, naming the record to download.
 
