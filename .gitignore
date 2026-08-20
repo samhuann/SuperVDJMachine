@@ -12,3 +12,6 @@ results/
 __pycache__/
 *.pyc
 .pytest_cache/
+
+# editable-install build artifacts
+*.egg-info/

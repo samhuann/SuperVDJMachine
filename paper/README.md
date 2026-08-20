@@ -35,12 +35,18 @@ six supplementary tables.
 ## Inputs
 
 The script reads the per-sequence posterior table and the analysis artifacts under
-`results/`, none of which are in git. Download the deposited analysis record, unpack
-it so `results/` sits at the repository root, and run the command above. If the
-posterior table is elsewhere, pass `--posteriors /path/to/posteriors.tsv`.
+`results/`, none of which are in git. They are deposited as a single archive:
 
-> The record is not deposited yet, so the DOI the script prints is a placeholder
-> (`10.5281/zenodo.XXXXXXX`). It is set as `ZENODO` at the top of the script.
+**https://doi.org/10.5281/zenodo.22024426**
+
+Download `supervdj-results.zip`, unpack it at the repository root so that `results/`
+sits beside `supervdj/`, and run the command above. If the posterior table is
+somewhere else, pass `--posteriors /path/to/posteriors.tsv`.
+
+```bash
+unzip supervdj-results.zip          # 138 MB, 1.1 GB unpacked
+PYTHONPATH=. python paper/verify_manuscript_numbers.py
+```
 
 Any missing input is reported up front, as a list, naming the record to download.
 

@@ -45,7 +45,7 @@ def skip(claim, why):
 # --------------------------------------------------------------------------- #
 # inputs: everything this script reads, so a bare clone gets one clear message
 # --------------------------------------------------------------------------- #
-ZENODO = "https://doi.org/10.5281/zenodo.XXXXXXX"   # TODO: real DOI once deposited
+ZENODO = "https://doi.org/10.5281/zenodo.22024426"       # deposited analysis record
 
 ARTIFACTS = [
     "results/ingest/canonical_all.tsv",

@@ -134,6 +134,11 @@ top-k coverage, confidence fractions, the V-by-V leakage matrix and its clusteri
 the usage-controlled selection shift, and the resampling tests.
 `aggregate.build_figures(df)` draws the figure set from a posterior table.
 
+The posterior table behind the published results is too large for git and is
+deposited as its own citable record:
+[10.5281/zenodo.22024426](https://doi.org/10.5281/zenodo.22024426). Unpack it at the
+repository root so `results/` sits beside `supervdj/`.
+
 ```bash
 pip install -e ".[figures]"
 python -c "import supervdj.aggregate as A; A.build_figures(A.load())"

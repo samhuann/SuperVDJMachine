@@ -13,7 +13,8 @@ Legal code: https://creativecommons.org/licenses/by/4.0/legalcode
   * supervdj/data/calibration_TRA.tsv, supervdj/data/calibration_TRB.tsv
   * supervdj/data/confusion_groups_TRA.tsv, supervdj/data/confusion_groups_TRB.tsv
   * the per-sequence posterior table (results/posteriors.tsv), which is not in
-    this repository -- it is 1.1 GB and is deposited on Zenodo as its own record
+    this repository -- it is 1.1 GB and is deposited on Zenodo as its own record,
+    https://doi.org/10.5281/zenodo.22024426
 
 Attribution for these products:
 
