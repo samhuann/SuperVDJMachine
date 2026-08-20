@@ -23,10 +23,16 @@ Attribution for these products:
 
 Not ours to license
 -------------------
-data/imgt/*.fasta are IMGT germline reference sequences, redistributed here only
-to place CDR3 boundaries reproducibly. They remain subject to IMGT's terms of
-use (https://www.imgt.org/) and should be cited as IMGT/GENE-DB, not as part of
-this work.
+data/imgt/*.fasta are IMGT germline reference sequences, redistributed here to
+place CDR3 boundaries reproducibly. IMGT provides its data under CC-BY-4.0
+(https://www.imgt.org/about/termsofuse.php), so redistribution is permitted and
+attribution is required:
+
+  IMGT(R), the international ImMunoGeneTics information system(R),
+  https://www.imgt.org (founder and director Marie-Paule Lefranc). Germline
+  reference sequences from IMGT/GENE-DB, CC-BY-4.0.
+
+They are IMGT's work, not part of this one, and should be cited as such.
 
 The repertoire databases themselves -- VDJdb, McPAS-TCR and NeoTCR -- are not
 redistributed in any form. This repository ships the download and normalization
