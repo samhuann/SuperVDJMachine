@@ -61,3 +61,15 @@ reproduce the same numbers.
 The three word-count claims compare the manuscript's stated counts against a fresh
 count of the LaTeX sources. Those sources are not deposited, so on any clone the three
 appear as `SKIP` rows rather than being dropped from the total.
+
+## Scripts added for the revision
+
+Two analyses in this directory prepare or use the healthy bulk repertoire added during
+revision, which is the Emerson et al. immunoSEQ cohort (immuneACCESS,
+doi:10.21417/B7001Z). Both read the cohort's location from `SUPERVDJ_EMERSON_DIR` and
+`SUPERVDJ_EMERSON_META`.
+
+| script | what it does |
+|---|---|
+| `prepare_emerson.py` | samples across adult donors uniformly over distinct rearrangements rather than by template count, keeping in-frame productive rearrangements with unambiguous calls from one chemistry |
+| `nucleotide_vs_aminoacid.py` | recovers the nucleotide CDR3 from the reported rearrangement and scores the posteriors both ways, so the cost of reading the CDR3 as protein can be measured |

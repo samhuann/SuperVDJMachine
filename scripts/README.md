@@ -18,6 +18,10 @@ the usage-controlled selection shift, and the resampling tests.
 | `validate_calibration.py` | fits the coverage curve on half a set and measures achieved coverage on the other half, split by a hash of the CDR3 |
 | `validate_cohort.py` | repeats the recoverability measurements on an independent cohort and scores its confusion grouping against a reference one |
 | `cohort_usage_reweight.py` | isolates how much of a difference between two sets is explained by their V-usage marginals, by importance reweighting at fixed posteriors |
+| `recoverability_controls.py` | asks whether the measured recoverability is explained by something other than the CDR3: the gene usage prior, a partner chain, an epitope label, germline similarity and trimming, plus a check against CDR3s that are annotated to several V genes |
+| `validate_groups.py` | tests the confusion grouping without fixing the number of groups, choosing it by silhouette and re-choosing it inside every bootstrap replicate |
+| `groups_across_cohorts.py` | compares groupings derived independently in different cohorts, with the number of groups chosen separately in each |
+| `aligner_crosscheck.py` | scores the posterior leakage against the V genes an immunoSEQ alignment pipeline reports as mutually unresolvable |
 
 `validate_cohort.py` reads cohorts from `data/cohorts/`, overridable with
 `SUPERVDJ_COHORT_DIR`.
@@ -32,3 +36,12 @@ these analyses:
 ```bash
 pip install -e ".[figures]"
 ```
+
+Some scripts need data that is not in this repository. They read its location from the
+environment and fall back to a path under `data/`:
+
+| variable | what it points at |
+|---|---|
+| `SUPERVDJ_EMERSON_DIR` | the Emerson immunoSEQ sample files, one `.tsv` per donor |
+| `SUPERVDJ_EMERSON_META` | that cohort's metadata table |
+| `SUPERVDJ_COHORT_DIR` | the held-out cohort directories |
